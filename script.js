@@ -1,759 +1,606 @@
 /* ================================================================
-   Phoenix-4 replica diagnosis — stylesheet
+   Phoenix-4 replica diagnosis — frontend logic
    ================================================================ */
 
-:root {
-  --bg: #fafaf9;
-  --surface: #ffffff;
-  --surface-2: #f5f5f4;
-  --border: #e7e5e4;
-  --border-strong: #d6d3d1;
-  --text: #1c1917;
-  --text-muted: #78716c;
-  --text-faint: #a8a29e;
-
-  --accent: #5b21b6;
-  --accent-soft: #ede9fe;
-  --accent-text: #4c1d95;
-
-  --danger: #b91c1c;
-  --danger-soft: #fef2f2;
-  --danger-border: #fecaca;
-
-  --warning: #b45309;
-  --warning-soft: #fffbeb;
-  --warning-border: #fde68a;
-
-  --success: #047857;
-  --success-soft: #ecfdf5;
-  --success-border: #a7f3d0;
-
-  --radius: 10px;
-  --radius-sm: 6px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-strong: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-.container {
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.hidden { display: none !important; }
-.muted { color: var(--text-muted); }
-.small { font-size: 13px; }
-
-/* ================================================================
-   Header
-   ================================================================ */
-
-.site-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 0;
-  margin-bottom: 32px;
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius);
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-}
-
-.brand-text h1 {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.brand-text .tagline {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 1px;
-}
-
-/* ================================================================
-   Cards
-   ================================================================ */
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-}
-
-.card h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.card h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  margin: 24px 0 12px;
-}
-
-.card p {
-  color: var(--text);
-  margin-top: 6px;
-}
-
-.card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  background: var(--surface-2);
-  color: var(--text-muted);
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.badge-running {
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  border-color: transparent;
-}
-
-.badge-pass {
-  background: var(--success-soft);
-  color: var(--success);
-  border-color: var(--success-border);
-}
-
-.badge-fail {
-  background: var(--danger-soft);
-  color: var(--danger);
-  border-color: var(--danger-border);
-}
-
-.badge-warn {
-  background: var(--warning-soft);
-  color: var(--warning);
-  border-color: var(--warning-border);
-}
-
-/* ================================================================
-   Dropzone
-   ================================================================ */
-
-.dropzone {
-  margin-top: 18px;
-  border: 2px dashed var(--border-strong);
-  border-radius: var(--radius);
-  padding: 40px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-.dropzone:hover,
-.dropzone.dragover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-
-.dropzone-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.upload-icon {
-  width: 36px;
-  height: 36px;
-  color: var(--text-muted);
-}
-
-.dropzone-title {
-  font-size: 14px;
-  color: var(--text);
-}
-
-.link {
-  color: var(--accent);
-  text-decoration: underline;
-}
-
-/* ================================================================
-   Divider
-   ================================================================ */
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 24px 0 18px;
-  color: var(--text-faint);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.divider span {
-  padding: 0 12px;
-}
-
-/* ================================================================
-   Scenario buttons
-   ================================================================ */
-
-.scenarios p {
-  margin-bottom: 10px;
-}
-
-.scenario-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ================================================================
-   Buttons
-   ================================================================ */
-
-.btn-primary,
-.btn-secondary,
-.btn-ghost {
-  display: inline-block;
-  padding: 9px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-family: var(--font);
-  transition: all 0.15s;
-  text-decoration: none;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  margin-top: 20px;
-}
-
-.btn-primary:hover {
-  background: var(--accent-text);
-}
-
-.btn-secondary {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--border-strong);
-}
-
-.btn-secondary:hover {
-  background: var(--surface-2);
-  border-color: var(--text-muted);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border-strong);
-}
-
-.btn-ghost:hover {
-  background: var(--surface-2);
-}
-
-/* ================================================================
-   Check list (analysis progress)
-   ================================================================ */
-
-.check-list {
-  margin-top: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.check-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-
-.check-row:last-child { border-bottom: none; }
-
-.check-row .num {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--surface-2);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.check-row .name {
-  flex: 1;
-  color: var(--text);
-}
-
-.check-row .status {
-  font-size: 12px;
-  color: var(--text-faint);
-}
-
-.check-row.running .num {
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  animation: pulse 1.2s ease-in-out infinite;
-}
-
-.check-row.pass .num {
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-.check-row.pass .status { color: var(--success); }
-
-.check-row.fail .num {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.check-row.fail .status { color: var(--danger); }
-
-.check-row.warn .num {
-  background: var(--warning-soft);
-  color: var(--warning);
-}
-
-.check-row.warn .status { color: var(--warning); }
-
-.check-row.skipped {
-  opacity: 0.65;
-}
-
-.check-row.skipped .num {
-  background: var(--surface-2);
-  color: var(--text-faint);
-  border: 1px dashed var(--border-strong);
-}
-
-.check-row.skipped .name {
-  color: var(--text-muted);
-}
-
-.check-row.skipped .status {
-  color: var(--text-faint);
-  font-style: italic;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.demo-note {
-  background: var(--surface-2);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin: 16px 0;
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.6;
-}
-
-.demo-note strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-/* ================================================================
-   Results section
-   ================================================================ */
-
-.summary-banner {
-  padding: 16px 20px;
-  border-radius: var(--radius);
-  margin: 20px 0;
-  border: 1px solid;
-}
-
-.summary-banner.pass {
-  background: var(--success-soft);
-  border-color: var(--success-border);
-  color: var(--success);
-}
-
-.summary-banner.fail {
-  background: var(--danger-soft);
-  border-color: var(--danger-border);
-  color: var(--danger);
-}
-
-.summary-banner.warn {
-  background: var(--warning-soft);
-  border-color: var(--warning-border);
-  color: var(--warning);
-}
-
-.summary-banner h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: inherit;
-}
-
-.summary-banner p {
-  font-size: 13px;
-  color: inherit;
-  opacity: 0.85;
-  margin: 0;
-}
-
-.findings-section h3 {
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  margin: 24px 0 12px;
-}
-
-.finding {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  margin-bottom: 10px;
-  border-left: 3px solid var(--text-faint);
-}
-
-.finding.blocking { border-left-color: var(--danger); }
-.finding.warning { border-left-color: var(--warning); }
-
-.finding-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
-}
-
-.finding-code {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  background: var(--surface-2);
-  padding: 2px 8px;
-  border-radius: 4px;
-  color: var(--text-muted);
-}
-
-.finding-category {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-faint);
-}
-
-.finding-message {
-  font-size: 14px;
-  color: var(--text);
-  margin: 6px 0;
-}
-
-.finding-fix {
-  font-size: 13px;
-  color: var(--text-muted);
-  padding-top: 8px;
-  border-top: 1px dashed var(--border);
-  margin-top: 8px;
-}
-
-.finding-fix strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.finding-evidence {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--surface-2);
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  margin-top: 8px;
-  display: inline-block;
-}
-
-/* ================================================================
-   Reason code catalogue
-   ================================================================ */
-
-.catalogue {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 18px;
-}
-
-.cat-group h4 {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.cat-codes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.cat-code {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  padding: 4px 9px;
-  border-radius: 4px;
-  color: var(--text);
-}
-
-.cat-code.blocking { border-left: 2px solid var(--danger); }
-.cat-code.warning { border-left: 2px solid var(--warning); }
-
-/* ================================================================
-   About section
-   ================================================================ */
-
-.prose-list {
-  margin: 12px 0 12px 22px;
-  color: var(--text);
-}
-
-.prose-list li {
-  margin-bottom: 6px;
-}
-
-.check-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.check-grid.mapped {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  background: var(--surface-2);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-
-.check-grid.mapped .check-item {
-  align-items: center;
-}
-
-.check-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.check-text strong {
-  font-weight: 500;
-  color: var(--text);
-}
-
-.check-protects {
-  font-size: 11px;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  font-weight: 500;
-}
-
-.check-item .num {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
-  border: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-/* ================================================================
-   Hero / About Phoenix-4 section
-   ================================================================ */
-
-.hero-card {
-  border-left: 3px solid var(--accent);
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 22px 0 8px;
-}
-
-.feature {
-  padding: 16px;
-  background: var(--surface-2);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-.feature h4 {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent-text);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.feature p {
-  font-size: 13px;
-  color: var(--text);
-  margin: 0;
-  line-height: 1.55;
-}
-
-.why-validation {
-  margin-top: 22px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.why-validation h3 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.why-validation p {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.65;
-}
-
-/* ================================================================
-   Footer
-   ================================================================ */
-
-.site-footer {
-  margin-top: 60px;
-  padding: 30px 0;
-  border-top: 1px solid var(--border);
-  text-align: center;
-}
-
-.site-footer p {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.site-footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-
-/* ================================================================
-   Responsive
-   ================================================================ */
-
-@media (max-width: 600px) {
-  .container { padding: 0 16px; }
-  .card { padding: 20px; }
-  .brand-text h1 { font-size: 15px; }
-  .brand-text .tagline { display: none; }
-  .check-grid,
-  .check-grid.mapped { grid-template-columns: 1fr; }
-  .feature-grid { grid-template-columns: 1fr; }
-  .scenario-buttons { flex-direction: column; }
-  .scenario-buttons button { width: 100%; }
-}
+// ----------------------------------------------------------------
+// Reason code catalogue — single source of truth
+// Ported 1:1 from the Python backend's reason_codes.py
+// ----------------------------------------------------------------
+
+const SEVERITY = { BLOCKING: "blocking", WARNING: "warning" };
+
+const REASON_CODES = {
+  // Step 1 — Consent
+  NO_CONSENT_STATEMENT: {
+    code: "NO_CONSENT_STATEMENT",
+    category: "consent",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "We could not find a spoken consent statement in your video.",
+    fix_action: "Re-record and read the full consent script at the start of the video.",
+  },
+  PARTIAL_CONSENT: {
+    code: "PARTIAL_CONSENT",
+    category: "consent",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your consent statement was detected but is missing required phrases.",
+    fix_action: "Re-record reading the complete consent script word for word.",
+  },
+  CONSENT_INAUDIBLE: {
+    code: "CONSENT_INAUDIBLE",
+    category: "consent",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "The consent statement was too quiet or unclear to verify.",
+    fix_action: "Re-record the consent statement clearly in a quiet environment.",
+  },
+  // Step 2 — Talking duration
+  TALKING_TOO_SHORT: {
+    code: "TALKING_TOO_SHORT",
+    category: "speech",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your video does not contain enough active speech for training.",
+    fix_action: "Record at least 2 minutes of continuous talking.",
+  },
+  INSUFFICIENT_SPEECH_VARIETY: {
+    code: "INSUFFICIENT_SPEECH_VARIETY",
+    category: "speech",
+    severity: SEVERITY.WARNING,
+    customer_message: "Your speech sample is repetitive and may produce a lower-quality replica.",
+    fix_action: "Read varied sentences covering different sounds and expressions.",
+  },
+  // Step 3 — Silence
+  TOO_MUCH_SILENCE: {
+    code: "TOO_MUCH_SILENCE",
+    category: "speech",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Too much of your video is silent.",
+    fix_action: "Reduce dead air and keep talking continuously through the recording.",
+  },
+  LONG_PAUSES_DETECTED: {
+    code: "LONG_PAUSES_DETECTED",
+    category: "speech",
+    severity: SEVERITY.WARNING,
+    customer_message: "There are unusually long pauses in your speech.",
+    fix_action: "Speak at a steady pace without long pauses between sentences.",
+  },
+  // Step 4 — File size
+  FILE_TOO_SMALL: {
+    code: "FILE_TOO_SMALL",
+    category: "technical",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your uploaded file is too small to contain a usable training video.",
+    fix_action: "Re-export the video with higher bitrate or check that the upload completed.",
+  },
+  FILE_TOO_LARGE: {
+    code: "FILE_TOO_LARGE",
+    category: "technical",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your uploaded file exceeds the maximum allowed size.",
+    fix_action: "Re-export at a lower bitrate or trim the video length.",
+  },
+  // Step 5 — Codec
+  UNSUPPORTED_CODEC: {
+    code: "UNSUPPORTED_CODEC",
+    category: "technical",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your video uses a codec we cannot process.",
+    fix_action: "Re-encode the video to H.264 or H.265 (MP4 container).",
+  },
+  CORRUPT_STREAM: {
+    code: "CORRUPT_STREAM",
+    category: "technical",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "The video stream could not be decoded.",
+    fix_action: "Re-export the file from your editor and upload again.",
+  },
+  // Step 6 — Source type
+  AI_GENERATED_DETECTED: {
+    code: "AI_GENERATED_DETECTED",
+    category: "authenticity",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your training video appears to be AI-generated, which is not allowed.",
+    fix_action: "Submit footage of a real human filmed on a camera.",
+  },
+  DEEPFAKE_DETECTED: {
+    code: "DEEPFAKE_DETECTED",
+    category: "authenticity",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "We detected deepfake or face-swap artifacts in your video.",
+    fix_action: "Submit unmodified footage of yourself.",
+  },
+  // Step 7 — Face & lip
+  LIP_SYNC_MISMATCH: {
+    code: "LIP_SYNC_MISMATCH",
+    category: "framing",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your lip movement does not match the audio track.",
+    fix_action: "Re-record with the camera capturing your face while you speak (no dubbing).",
+  },
+  FACE_PARTIALLY_OCCLUDED: {
+    code: "FACE_PARTIALLY_OCCLUDED",
+    category: "framing",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your face is partially covered (by hands, hair, mask, or objects).",
+    fix_action: "Keep your full face visible and unobstructed throughout the recording.",
+  },
+  FACE_OUT_OF_FRAME: {
+    code: "FACE_OUT_OF_FRAME",
+    category: "framing",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your face moves out of the frame during the video.",
+    fix_action: "Stay centered in the frame for the entire recording.",
+  },
+  SECOND_PERSON_DETECTED: {
+    code: "SECOND_PERSON_DETECTED",
+    category: "framing",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "A second person was detected in your training video.",
+    fix_action: "Record alone with no one else visible in the frame.",
+  },
+  // Step 8 — Resolution
+  RESOLUTION_TOO_LOW: {
+    code: "RESOLUTION_TOO_LOW",
+    category: "resolution",
+    severity: SEVERITY.BLOCKING,
+    customer_message: "Your video resolution is too low for training.",
+    fix_action: "Re-record at 1080p (1920x1080) or higher.",
+  },
+  INVALID_ASPECT_RATIO: {
+    code: "INVALID_ASPECT_RATIO",
+    category: "resolution",
+    severity: SEVERITY.WARNING,
+    customer_message: "Your video has an unusual aspect ratio.",
+    fix_action: "Record in 16:9 landscape orientation.",
+  },
+};
+
+// ----------------------------------------------------------------
+// Detector definitions — order matters, this is the pipeline order
+// ----------------------------------------------------------------
+
+const DETECTORS = [
+  { id: "consent",          name: "Consent statement",       simulated: true  },
+  { id: "talking_duration", name: "Talking segment duration", simulated: true  },
+  { id: "silence",          name: "Silent segments",          simulated: true  },
+  { id: "file_size",        name: "File size",                simulated: false },
+  { id: "codec",            name: "Video codec",              simulated: false },
+  { id: "source_type",      name: "Source type (real/AI)",    simulated: true  },
+  { id: "face_lip",         name: "Face &amp; lip checks",    simulated: true  },
+  { id: "resolution",       name: "Resolution &amp; aspect",  simulated: false },
+];
+
+// Thresholds — match the Python backend
+const MIN_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_MB = 2048;
+const MIN_WIDTH = 1920;
+const MIN_HEIGHT = 1080;
+const TARGET_ASPECT = 16 / 9;
+const ASPECT_TOLERANCE = 0.1;
+const SUPPORTED_MIMES = ["video/mp4", "video/quicktime", "video/webm", "video/x-m4v"];
+
+// ----------------------------------------------------------------
+// Real detectors — these run on the actual uploaded file
+// ----------------------------------------------------------------
+
+function checkFileSize(file) {
+  const findings = [];
+  const sizeMb = file.size / (1024 * 1024);
+  if (sizeMb < MIN_FILE_SIZE_MB) {
+    findings.push({
+      ...REASON_CODES.FILE_TOO_SMALL,
+      evidence: { size_mb: sizeMb.toFixed(2), minimum_mb: MIN_FILE_SIZE_MB },
+    });
+  } else if (sizeMb > MAX_FILE_SIZE_MB) {
+    findings.push({
+      ...REASON_CODES.FILE_TOO_LARGE,
+      evidence: { size_mb: sizeMb.toFixed(2), maximum_mb: MAX_FILE_SIZE_MB },
+    });
+  }
+  return findings;
+}
+
+function checkCodec(file) {
+  const findings = [];
+  if (!file.type || !SUPPORTED_MIMES.includes(file.type)) {
+    findings.push({
+      ...REASON_CODES.UNSUPPORTED_CODEC,
+      evidence: { detected_type: file.type || "unknown", supported: SUPPORTED_MIMES },
+    });
+  }
+  return findings;
+}
+
+function checkResolution(meta) {
+  const findings = [];
+  if (meta.width < MIN_WIDTH || meta.height < MIN_HEIGHT) {
+    findings.push({
+      ...REASON_CODES.RESOLUTION_TOO_LOW,
+      evidence: { width: meta.width, height: meta.height, minimum: `${MIN_WIDTH}x${MIN_HEIGHT}` },
+    });
+  }
+  if (meta.height > 0) {
+    const aspect = meta.width / meta.height;
+    if (Math.abs(aspect - TARGET_ASPECT) > ASPECT_TOLERANCE) {
+      findings.push({
+        ...REASON_CODES.INVALID_ASPECT_RATIO,
+        evidence: { aspect_ratio: aspect.toFixed(3), expected: "16:9" },
+      });
+    }
+  }
+  return findings;
+}
+
+// ----------------------------------------------------------------
+// Video metadata extraction (real, browser-native)
+// ----------------------------------------------------------------
+
+function readVideoMetadata(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    video.muted = true;
+    video.src = url;
+    video.onloadedmetadata = () => {
+      const meta = {
+        width: video.videoWidth,
+        height: video.videoHeight,
+        duration: video.duration,
+      };
+      URL.revokeObjectURL(url);
+      resolve(meta);
+    };
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not decode video"));
+    };
+  });
+}
+
+// ----------------------------------------------------------------
+// Scenario simulator — for ML-based checks the browser cannot do
+// ----------------------------------------------------------------
+
+const SCENARIOS = {
+  "all-pass": {
+    label: "All checks pass",
+    file: { name: "training-good.mp4", sizeMb: 145, width: 1920, height: 1080, type: "video/mp4" },
+    extraFindings: [],
+  },
+  "low-res": {
+    label: "Low resolution video",
+    file: { name: "phone-recording.mp4", sizeMb: 24, width: 640, height: 480, type: "video/mp4" },
+    extraFindings: [],
+  },
+  "no-consent": {
+    label: "Missing consent statement",
+    file: { name: "intro-video.mp4", sizeMb: 180, width: 1920, height: 1080, type: "video/mp4" },
+    extraFindings: ["NO_CONSENT_STATEMENT"],
+  },
+  "ai-generated": {
+    label: "AI-generated source",
+    file: { name: "synthetic-avatar.mp4", sizeMb: 95, width: 1920, height: 1080, type: "video/mp4" },
+    extraFindings: ["AI_GENERATED_DETECTED"],
+  },
+  "multiple": {
+    label: "Multiple issues",
+    file: { name: "rough-cut.mov", sizeMb: 12, width: 1280, height: 720, type: "video/quicktime" },
+    extraFindings: ["PARTIAL_CONSENT", "TOO_MUCH_SILENCE", "FACE_PARTIALLY_OCCLUDED"],
+  },
+};
+
+// ----------------------------------------------------------------
+// Pipeline — runs all detectors and assembles a report
+// ----------------------------------------------------------------
+
+async function runPipeline(input, scenarioFindings = [], mode = "real") {
+  // mode = "real"     → only the 3 ffprobe-style checks run, ML checks are skipped
+  // mode = "scenario" → all 8 checks run, simulated ones use scenario findings
+  const checkListEl = document.getElementById("checkList");
+  checkListEl.innerHTML = "";
+
+  // Initialize all rows as pending
+  DETECTORS.forEach((d, i) => {
+    const row = document.createElement("div");
+    row.className = "check-row";
+    row.id = `row-${d.id}`;
+    row.innerHTML = `
+      <span class="num">${i + 1}</span>
+      <span class="name">${d.name}</span>
+      <span class="status">queued</span>
+    `;
+    checkListEl.appendChild(row);
+  });
+
+  const allFindings = [];
+  let skippedCount = 0;
+  let ranCount = 0;
+
+  for (const detector of DETECTORS) {
+    const row = document.getElementById(`row-${detector.id}`);
+    row.classList.add("running");
+    row.querySelector(".status").textContent = "checking…";
+    await sleep(280 + Math.random() * 180);
+
+    let findings = [];
+    let skipped = false;
+
+    if (!detector.simulated) {
+      // Real check — always runs
+      if (detector.id === "file_size") findings = checkFileSize(input.file);
+      else if (detector.id === "codec") findings = checkCodec(input.file);
+      else if (detector.id === "resolution") findings = checkResolution(input.meta);
+      ranCount++;
+    } else if (mode === "scenario") {
+      // Scenario mode — pull from explicit findings list
+      findings = scenarioFindings
+        .filter((code) => detectorOwnsCode(detector.id, code))
+        .map((code) => ({ ...REASON_CODES[code], evidence: { simulated: true } }));
+      ranCount++;
+    } else {
+      // Real upload + ML detector — skip honestly
+      skipped = true;
+      skippedCount++;
+    }
+
+    row.classList.remove("running");
+    if (skipped) {
+      row.classList.add("skipped");
+      row.querySelector(".status").textContent = "needs backend";
+    } else if (findings.length === 0) {
+      row.classList.add("pass");
+      row.querySelector(".status").textContent = "passed";
+    } else {
+      const blocking = findings.some((f) => f.severity === SEVERITY.BLOCKING);
+      row.classList.add(blocking ? "fail" : "warn");
+      row.querySelector(".status").textContent =
+        `${findings.length} issue${findings.length > 1 ? "s" : ""}`;
+    }
+
+    allFindings.push(...findings);
+  }
+
+  return {
+    video_name: input.file.name,
+    findings: allFindings,
+    mode,
+    ran_count: ranCount,
+    skipped_count: skippedCount,
+  };
+}
+
+function detectorOwnsCode(detectorId, code) {
+  const ownership = {
+    consent: ["NO_CONSENT_STATEMENT", "PARTIAL_CONSENT", "CONSENT_INAUDIBLE"],
+    talking_duration: ["TALKING_TOO_SHORT", "INSUFFICIENT_SPEECH_VARIETY"],
+    silence: ["TOO_MUCH_SILENCE", "LONG_PAUSES_DETECTED"],
+    source_type: ["AI_GENERATED_DETECTED", "DEEPFAKE_DETECTED"],
+    face_lip: ["LIP_SYNC_MISMATCH", "FACE_PARTIALLY_OCCLUDED", "FACE_OUT_OF_FRAME", "SECOND_PERSON_DETECTED"],
+  };
+  return (ownership[detectorId] || []).includes(code);
+}
+
+// ----------------------------------------------------------------
+// Report rendering
+// ----------------------------------------------------------------
+
+function renderReport(report) {
+  const body = document.getElementById("resultsBody");
+  const badge = document.getElementById("resultsBadge");
+
+  const blocking = report.findings.filter((f) => f.severity === SEVERITY.BLOCKING);
+  const warnings = report.findings.filter((f) => f.severity === SEVERITY.WARNING);
+  const isBlocking = blocking.length > 0;
+
+  let banner;
+  if (isBlocking) {
+    banner = `<div class="summary-banner fail">
+      <h3>Replica cannot be built</h3>
+      <p>${blocking.length} blocking issue${blocking.length > 1 ? "s" : ""} must be fixed before resubmission${warnings.length ? `, plus ${warnings.length} warning${warnings.length > 1 ? "s" : ""}` : ""}.</p>
+    </div>`;
+    badge.textContent = "Failed";
+    badge.className = "badge badge-fail";
+  } else if (warnings.length) {
+    banner = `<div class="summary-banner warn">
+      <h3>Replica can be built — with warnings</h3>
+      <p>${warnings.length} non-blocking issue${warnings.length > 1 ? "s" : ""} detected. Quality may be affected.</p>
+    </div>`;
+    badge.textContent = "Warnings";
+    badge.className = "badge badge-warn";
+  } else if (report.mode === "real" && report.skipped_count > 0) {
+    // Honest message when only the technical checks ran
+    banner = `<div class="summary-banner pass">
+      <h3>Technical checks passed</h3>
+      <p>The ${report.ran_count} browser-runnable checks all passed. ${report.skipped_count} ML-based checks could not run in the browser — see the note below.</p>
+    </div>`;
+    badge.textContent = "Partial";
+    badge.className = "badge";
+  } else {
+    banner = `<div class="summary-banner pass">
+      <h3>All checks passed</h3>
+      <p>This video meets every requirement and is ready for replica training.</p>
+    </div>`;
+    badge.textContent = "Passed";
+    badge.className = "badge badge-pass";
+  }
+
+  let html = banner;
+  html += `<p class="muted small">Video: <strong>${escapeHtml(report.video_name)}</strong> · ${report.findings.length} finding${report.findings.length === 1 ? "" : "s"}</p>`;
+
+  // Honest disclosure for real uploads
+  if (report.mode === "real" && report.skipped_count > 0) {
+    html += `<div class="demo-note">
+      <strong>Browser demo limitation:</strong> ${report.skipped_count} of the 8 checks (consent statement, talking duration, silence, source type, face &amp; lip) require ML models like Whisper, silero-vad, and SyncNet. The browser cannot run these — they need the production Python backend. The 3 technical checks (file size, codec, resolution) ran for real on your file.
+      <br><br>
+      <strong>To see all 8 checks in action,</strong> click one of the scenario buttons above. Each scenario simulates a different failure mode end-to-end.
+    </div>`;
+  }
+
+  if (blocking.length) {
+    html += `<div class="findings-section"><h3>Blocking issues — must be fixed</h3>`;
+    blocking.forEach((f) => { html += renderFinding(f); });
+    html += `</div>`;
+  }
+  if (warnings.length) {
+    html += `<div class="findings-section"><h3>Warnings — recommended</h3>`;
+    warnings.forEach((f) => { html += renderFinding(f); });
+    html += `</div>`;
+  }
+
+  body.innerHTML = html;
+}
+
+function renderFinding(f) {
+  const evidenceStr = f.evidence
+    ? Object.entries(f.evidence).map(([k, v]) => `${k}: ${v}`).join(" · ")
+    : "";
+  return `
+    <div class="finding ${f.severity}">
+      <div class="finding-head">
+        <span class="finding-code">${f.code}</span>
+        <span class="finding-category">${f.category}</span>
+      </div>
+      <div class="finding-message">${escapeHtml(f.customer_message)}</div>
+      <div class="finding-fix"><strong>Fix:</strong> ${escapeHtml(f.fix_action)}</div>
+      ${evidenceStr ? `<div class="finding-evidence">${escapeHtml(evidenceStr)}</div>` : ""}
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------
+// Catalogue rendering — shown on page load
+// ----------------------------------------------------------------
+
+function renderCatalogue() {
+  const grid = document.getElementById("catalogueGrid");
+  const groups = {};
+  Object.values(REASON_CODES).forEach((rc) => {
+    if (!groups[rc.category]) groups[rc.category] = [];
+    groups[rc.category].push(rc);
+  });
+
+  let html = "";
+  Object.entries(groups).forEach(([cat, codes]) => {
+    html += `<div class="cat-group"><h4>${cat}</h4><div class="cat-codes">`;
+    codes.forEach((c) => {
+      html += `<span class="cat-code ${c.severity}" title="${escapeHtml(c.customer_message)}">${c.code}</span>`;
+    });
+    html += `</div></div>`;
+  });
+  grid.innerHTML = html;
+}
+
+// ----------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function showAnalysis() {
+  document.getElementById("analysisCard").classList.remove("hidden");
+  document.getElementById("resultsCard").classList.add("hidden");
+  document.getElementById("analysisBadge").textContent = "In progress";
+  document.getElementById("analysisBadge").className = "badge badge-running";
+  document.getElementById("analysisCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function showResults() {
+  document.getElementById("analysisBadge").textContent = "Complete";
+  document.getElementById("analysisBadge").className = "badge";
+  document.getElementById("resultsCard").classList.remove("hidden");
+  setTimeout(() => {
+    document.getElementById("resultsCard").scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 200);
+}
+
+function resetUI() {
+  document.getElementById("analysisCard").classList.add("hidden");
+  document.getElementById("resultsCard").classList.add("hidden");
+  document.getElementById("checkList").innerHTML = "";
+  document.getElementById("fileInput").value = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ----------------------------------------------------------------
+// Event handlers
+// ----------------------------------------------------------------
+
+async function handleFile(file) {
+  if (!file) return;
+  showAnalysis();
+
+  let meta;
+  try {
+    meta = await readVideoMetadata(file);
+  } catch (err) {
+    meta = { width: 0, height: 0, duration: 0 };
+  }
+
+  const report = await runPipeline({ file, meta }, [], "real");
+  renderReport(report);
+  showResults();
+}
+
+async function handleScenario(scenarioKey) {
+  const scenario = SCENARIOS[scenarioKey];
+  if (!scenario) return;
+  showAnalysis();
+
+  // Build a fake file-like object so the real detectors still run
+  const fakeFile = {
+    name: scenario.file.name,
+    size: scenario.file.sizeMb * 1024 * 1024,
+    type: scenario.file.type,
+  };
+  const fakeMeta = { width: scenario.file.width, height: scenario.file.height, duration: 180 };
+
+  const report = await runPipeline({ file: fakeFile, meta: fakeMeta }, scenario.extraFindings, "scenario");
+  renderReport(report);
+  showResults();
+}
+
+// ----------------------------------------------------------------
+// Wire up the UI
+// ----------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderCatalogue();
+
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("fileInput");
+
+  dropzone.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+
+  ["dragenter", "dragover"].forEach((ev) => {
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+  });
+  ["dragleave", "drop"].forEach((ev) => {
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+    });
+  });
+  dropzone.addEventListener("drop", (e) => {
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  document.querySelectorAll("[data-scenario]").forEach((btn) => {
+    btn.addEventListener("click", () => handleScenario(btn.dataset.scenario));
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", resetUI);
+});
