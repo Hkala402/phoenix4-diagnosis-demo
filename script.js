@@ -317,7 +317,7 @@ function buildOfflineAnalysis() {
     warns.forEach((c,i)=>out+=`${i+1}. ${c.name} — ${c.detail.warn}\n\n`);
   }
   const pct=Math.round((checkResults.filter(c=>c.status==='pass').length/checkResults.length)*100);
-  out+=`APPROVAL ESTIMATE AFTER FIXES: ${Math.min(95,pct+30)}%\n\nNote: Add your Anthropic API key for full Claude AI diagnosis.`;
+  out+=`APPROVAL ESTIMATE AFTER FIXES: ${Math.min(95,pct+30)}%`;
   return out;
 }
 
