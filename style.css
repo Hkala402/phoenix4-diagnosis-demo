@@ -607,14 +607,42 @@ html, body {
   margin-top: 12px;
 }
 
+.check-grid.mapped {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
 .check-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius-sm);
   font-size: 13px;
+}
+
+.check-grid.mapped .check-item {
+  align-items: center;
+}
+
+.check-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.check-text strong {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.check-protects {
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: 500;
 }
 
 .check-item .num {
@@ -630,6 +658,63 @@ html, body {
   font-weight: 600;
   border: 1px solid var(--border);
   flex-shrink: 0;
+}
+
+/* ================================================================
+   Hero / About Phoenix-4 section
+   ================================================================ */
+
+.hero-card {
+  border-left: 3px solid var(--accent);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 22px 0 8px;
+}
+
+.feature {
+  padding: 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.feature h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.feature p {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.why-validation {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.why-validation h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.why-validation p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
 }
 
 /* ================================================================
@@ -666,7 +751,9 @@ html, body {
   .card { padding: 20px; }
   .brand-text h1 { font-size: 15px; }
   .brand-text .tagline { display: none; }
-  .check-grid { grid-template-columns: 1fr; }
+  .check-grid,
+  .check-grid.mapped { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
   .scenario-buttons { flex-direction: column; }
   .scenario-buttons button { width: 100%; }
 }
