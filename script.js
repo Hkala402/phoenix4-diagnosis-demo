@@ -130,13 +130,19 @@ function buildChecklist() {
     },
     {
       name:'Real Human Video Source',
-      pass:v.source==='real', warn:!v.source, fail:['ai','screen'].includes(v.source),
+      pass: v.source === 'real',
+      warn: v.source === '' || v.source === undefined,
+      fail: v.source === 'ai' || v.source === 'screen',
       detail:{
-        pass:'Real human recording — ideal for training quality.',
-        warn:'Source type not specified. Verify it is a direct camera recording.',
-        fail:'AI-generated or screen-recorded videos are not suitable for Phoenix-4.',
+        pass:'Real human recording — ideal for training quality. ✓',
+        warn:'Source type not selected. Please confirm it is a direct camera recording.',
+        fail: v.source === 'ai'
+          ? 'AI-generated video detected. Phoenix-4 cannot train a quality replica from synthetic content — it produces poor lip sync and unnatural movements.'
+          : 'Screen recording or virtual avatar cannot be used. Phoenix-4 requires a real human filmed directly on camera.',
       },
-      fix:'Record directly with a camera or webcam in good lighting.',
+      fix: v.source === 'ai'
+        ? 'Re-record using a real camera or webcam. The subject must be physically present and filmed directly. AI-generated videos will always fail Phoenix-4 training.'
+        : 'Film the subject directly using a webcam, phone camera, or DSLR. Ensure good lighting and a plain background.',
     },
     {
       name:'Full Lip Closure',
@@ -152,7 +158,7 @@ function buildChecklist() {
 
   let pass=0, warn=0, fail=0;
   checks.forEach((c,i) => {
-    const status = c.pass?'pass':c.warn?'warn':'fail';
+    const status = c.pass ? 'pass' : c.fail ? 'fail' : 'warn';
     if(status==='pass')pass++; else if(status==='warn')warn++; else fail++;
     checkResults.push({...c,status});
 
